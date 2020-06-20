@@ -8,6 +8,7 @@ public class Main {
         Thread anotherThread = new AnotherThread();
         anotherThread.setName("== Another Thread ==");
         anotherThread.start();
+
         new Thread() {
             public void run() {
                 System.out.println(ANSI_GREEN + "Hello from the anonymus class thread");
@@ -22,6 +23,8 @@ public class Main {
             }
         });
         myRunnableThread.start();
+        anotherThread.interrupt();
+
         System.out.println(ANSI_PURPLE+"Hello again from the main thread");
 
     }
