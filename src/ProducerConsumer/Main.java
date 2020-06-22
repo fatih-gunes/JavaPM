@@ -41,9 +41,12 @@ class MyProducer implements Runnable {
                 System.out.println(color + "Adding..." + num);
                 bufferLock.lock();
 //                synchronized (buffer) {
+                try {
                     buffer.add(num);
+                } finally {
+                    bufferLock.unlock();
+                }
 //                }
-                bufferLock.unlock();
 
                 Thread.sleep(random.nextInt(1000));
 
@@ -54,8 +57,11 @@ class MyProducer implements Runnable {
         System.out.println(color + "Adding EOF and exiting...");
 //        synchronized (buffer) {
         bufferLock.lock();
-        buffer.add("EOF");
-        bufferLock.unlock();
+        try {
+            buffer.add("EOF");
+        } finally {
+            bufferLock.unlock();
+        }
 //        }
     }
 }
@@ -74,22 +80,28 @@ class MyConsumer implements Runnable {
     }
 
     public void run() {
+        int counter = 0;
         while (true) {
 //            synchronized (buffer) {
-                bufferLock.lock();
-                if (buffer.isEmpty()) {
-                    bufferLock.unlock();
-                    continue;
-                }
-                if (buffer.get(0).equals(EOF)) {
-                    System.out.println(color + "Exiting");
-                    bufferLock.unlock();
-                    break;
-                } else {
-                    System.out.println(color + "Removed " + buffer.remove(0));
-                }
-                bufferLock.unlock();
+                if(bufferLock.tryLock()) {
+                    try {
+                        if (buffer.isEmpty()) {
+                            continue;
+                        }
+                        System.out.println(color + "The counter = " + counter);
+                        if (buffer.get(0).equals(EOF)) {
+                            System.out.println(color + "Exiting");
+                            break;
+                        } else {
+                            System.out.println(color + "Removed " + buffer.remove(0));
+                        }
+                    } finally {
+                        bufferLock.unlock();
+                    }
 //            }
+                } else {
+                    counter++;
+                }
         }
     }
 }
