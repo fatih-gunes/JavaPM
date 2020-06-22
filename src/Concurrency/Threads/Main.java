@@ -1,6 +1,6 @@
-package Threads;
+package Concurrency.Threads;
 
-import static Threads.ThreadColor.*;
+import static Concurrency.Threads.ThreadColor.*;
 
 public class Main {
     public static void main(String[] args) {

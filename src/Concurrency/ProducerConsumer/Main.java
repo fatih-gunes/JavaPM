@@ -1,6 +1,6 @@
-package ProducerConsumer;
+package Concurrency.ProducerConsumer;
 
-import Threads.ThreadColor;
+import Concurrency.Threads.ThreadColor;
 
 import java.util.ArrayList;
 import java.util.List;

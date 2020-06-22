@@ -1,4 +1,4 @@
-package Threads;
+package Concurrency.Threads;
 
 //linux-based colors
 public class ThreadColor {

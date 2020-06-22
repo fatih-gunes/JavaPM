@@ -1,4 +1,4 @@
-package Messages;
+package Concurrency.Messages;
 
 import java.util.Random;
 

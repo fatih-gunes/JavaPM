@@ -1,6 +1,6 @@
-package Counter;
+package Concurrency.Counter;
 
-import Threads.ThreadColor;
+import Concurrency.Threads.ThreadColor;
 
 public class Main {
     public static void main(String[] args) {
